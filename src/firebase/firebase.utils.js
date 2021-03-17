@@ -12,6 +12,17 @@ const config = {
     measurementId: "G-R2XSQ1P9P9"
 };
 
+firebase.initializeApp(config);
+
+export const auth = firebase.auth();
+export const firestore = firebase.firestore();
+
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
+
+// always trigger the google auth popup whenever we use this google auth provider for auth/sign-in
+googleProvider.setCustomParameters({prompt: 'select_account'});
+export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
+
 export const createUserProfileDocument = async (userAuth, additionalData) => {
     if(!userAuth) return;
 
@@ -70,15 +81,14 @@ export const convertCollectionsSnapshotToMap = (collections) => {
     }, {});
 }
 
-firebase.initializeApp(config);
-
-export const auth = firebase.auth();
-export const firestore = firebase.firestore();
-
-const provider = new firebase.auth.GoogleAuthProvider();
-
-// always trigger the google auth popup whenever we use this google auth provider for auth/sign-in
-provider.setCustomParameters({prompt: 'select_account'});
-export const signInWithGoogle = () => auth.signInWithPopup(provider);
+export const getCurrentUser = () => {
+    return new Promise((resolve, reject) => {
+        const unsubscribe = auth.onAuthStateChanged(userAuth => {
+            unsubscribe();
+            resolve(userAuth);
+        }, 
+        reject)
+    });
+}
 
 export default firebase;

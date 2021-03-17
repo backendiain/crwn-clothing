@@ -15,7 +15,7 @@ const CartDropdown = ({ cartItems, history, dispatch }) => (
     <div className="cart-dropdown">
         <div className="cart-items">
         {
-            cartItems.length ?
+            cartItems && cartItems.length ?
                 cartItems.map(cartItem => 
                     <CartItem key={cartItem.id} item={cartItem} />
                 )
@@ -33,10 +33,4 @@ const CartDropdown = ({ cartItems, history, dispatch }) => (
     </div>
 );
 
-const mapStateToProps = createStructuredSelector({
-    cartItems: selectCartItems
-});
-
-export default withRouter(
-    connect(mapStateToProps)(CartDropdown)
-);
+export default CartDropdown;
