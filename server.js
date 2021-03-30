@@ -28,6 +28,8 @@ app.listen(port, error => {
 });
 
 app.post('/payment', (req, res) => {
+    console.log('request to /payment endpoint');
+
     const body = {
         source: req.body.token.id,
         amount: req.body.amount,
