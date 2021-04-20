@@ -1,12 +1,16 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import StripeCheckout from 'react-stripe-checkout';
 import axios from 'axios';
 
-const StripeCheckoutButton = ({ price }) => {
+import { paymentStart, paymentFailure, paymentSuccess } from '../../redux/payment/payment.actions';
+
+const StripeCheckoutButton = ({ price, paymentStart, paymentFailure, paymentSuccess }) => {
     const priceForStripe = price * 100;
     const publishableKey = "pk_test_51IO4ktDfyI74KcXisWnBf89wCfgFOpVPJ2aAVGMxKB4KM0n6ioztWr1rB6Mn6l9JYG7cTKQr1LtHBQfQyZchNesv00jFEewIdL";
 
     const onToken = token => {
+        paymentStart();
         console.log(token);
         
         axios({
@@ -20,12 +24,14 @@ const StripeCheckoutButton = ({ price }) => {
         .then(response => {
             console.log(response);
             alert('Payment successful');
+            paymentSuccess(response);
         })
         .catch(error => {
-            console.error(`Payment error: ${JSON.parse(error)}`);
+            console.error('Payment error:', error);
             alert(
                 'There was an inssue with your payment. Please make sure you use the provided credit card.'
             );
+            paymentFailure(error);
         });
     }
 
@@ -45,4 +51,13 @@ const StripeCheckoutButton = ({ price }) => {
     )
 };
 
-export default StripeCheckoutButton;
+const mapDispatchToProps = dispatch => ({
+    paymentStart: () => dispatch(paymentStart()),
+    paymentFailure: (response) => dispatch(paymentFailure(response)),
+    paymentSuccess: (error) => dispatch(paymentSuccess(error))
+})
+
+export default connect(
+    null, 
+    mapDispatchToProps
+)(StripeCheckoutButton);

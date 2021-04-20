@@ -3,12 +3,14 @@ import { fetchCollectionsStart } from './shop/shop.sagas';
 import { userSagas } from './user/user.sagas';
 import { cartSagas } from './cart/cart.sagas';
 import { shopSagas } from './shop/shop.sagas';
+import { paymentSagas } from './payment/payment.sagas';
 
 export default function* rootSaga() {
     yield all([
         call(fetchCollectionsStart),
         call(userSagas),
         call(cartSagas),
-        call(shopSagas)
+        call(shopSagas),
+        call(paymentSagas)
     ]);
 }
