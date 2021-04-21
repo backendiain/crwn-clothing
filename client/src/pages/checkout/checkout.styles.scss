@@ -5,40 +5,58 @@
     flex-direction: column;
     align-items: center;
     margin: 50px auto 0;
+
+  @media (max-width:800px) {
+    width:90%;
+  }
   
-    .checkout-header {
-      width: 100%;
-      padding: 10px 0;
-      display: flex;
-      justify-content: space-between;
-      border-bottom: 1px solid darkgrey;
-  
-      .header-block {
-        text-transform: capitalize;
-        width: 23%;
-  
-        &:last-child {
-          width: 8%;
-        }
+  .checkout-header {
+    width: 100%;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid darkgrey;
+
+    .header-block {
+      text-transform: capitalize;
+      width: 23%;
+
+      @media (max-width:800px) {
+        display:none;
+      }
+
+      &:last-child {
+        width: 8%;
       }
     }
-  
-    .total {
-      margin-top: 30px;
-      margin-left: auto;
-      font-size: 36px;
-    }
+  }
 
-    button{
-      margin-top:50px;
-      margin:50px auto 0;
-    }
+  .total {
+    margin-top: 30px;
+    margin-left: auto;
+    font-size: 36px;
 
-    .test-warning{
-      margin-top:40px;
+    @media (max-width:800px) {
+      margin-bottom:40px;
+      margin-left:0;
       text-align:center;
-      font-size:24px;
-      color:red;
     }
   }
+
+  button{
+    margin-top:50px;
+    margin:50px auto 0;
+  }
+
+  .test-warning{
+    margin-top:40px;
+    text-align:center;
+    font-size:24px;
+    color:red;
+  }
+  
+  .actions{
+    margin-bottom:40px;
+  }
+}
   
